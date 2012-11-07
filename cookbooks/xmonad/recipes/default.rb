@@ -8,6 +8,21 @@ runtime = node["runtime_user"]
 xmonad_dir = File.join( runtime["home"],".xmonad" )
 xmobarhs_path = File.join( xmonad_dir, "xmobar.hs" )
 xmobar_path = File.join( xmonad_dir, "xmobar" )
+xmobar_repo_path = File.join( runtime["home"], "dmalikov", "xmobar-usable" )
+
+git xmobar_repo_path do
+    repository "git@github.com:dmalikov/xmobar-usable"
+    revision "master"
+    user runtime["uid"]
+    group runtime["gid"]
+    action :sync
+end
+
+execute "compile xmobar-usable" do
+  command "cabal install --flags=\"with_xft with_mpd with_alsa\""
+  action :run
+  cwd xmobar_repo_path
+end
 
 template xmobar_path do
   source "xmobar.hs.erb"
@@ -19,6 +34,10 @@ template xmobar_path do
   } )
 end
 
+execute "xmobar recompile" do
+  command "ghc -O2 --make #{xmobarhs_path} -o #{xmobar_path} -fforce-recomp"
+end
+
 template File.join( xmonad_dir,"xmonad.hs" ) do
   source "xmonad.hs.erb"
   mode 0755
@@ -27,10 +46,6 @@ template File.join( xmonad_dir,"xmonad.hs" ) do
   variables( {
     "color" => node["color"]
   } )
-end
-
-execute "xmobar recompile" do
-  command "ghc -O2 --make #{xmobarhs_path} -o #{xmobar_path} -fforce-recomp"
 end
 
 execute "xmonad recompile" do
