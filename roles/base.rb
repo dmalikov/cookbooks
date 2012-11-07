@@ -13,9 +13,9 @@ default_attributes(
     :purple => "#404051"
   },
   :runtime_user => {
-     :home => "/home/dmalikov/",
-     :uid => "dmalikov",
-     :gid => "dmalikov"
+    :home => "/home/dmalikov/",
+    :uid => "dmalikov",
+    :gid => "dmalikov"
   }
 )
 
