@@ -19,7 +19,7 @@ git xmobar_repo_path do
 end
 
 execute "compile xmobar-usable" do
-  command "cabal install --flags=\"with_xft with_mpd with_alsa\""
+  command "cabal install --flags=\"#{node["xmobar"]["flags"].join(" ")}\""
   action :run
   cwd xmobar_repo_path
 end
@@ -30,7 +30,8 @@ template xmobar_path do
   owner runtime["uid"]
   group runtime["gid"]
   variables( {
-    "color" => node["color"]
+    "color" => node["xmonad"]["color"],
+    "position" => node["xmobar"]["position"],
   } )
 end
 
@@ -44,7 +45,7 @@ template File.join( xmonad_dir,"xmonad.hs" ) do
   owner runtime["uid"]
   group runtime["gid"]
   variables( {
-    "color" => node["color"]
+    "color" => node["xmonad"]["color"],
   } )
 end
 
