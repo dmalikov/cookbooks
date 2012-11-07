@@ -3,29 +3,29 @@
 # Recipe:: default
 #
 
-runtime = node[:runtime_user]
+runtime = node["runtime_user"]
 
-xmonad_dir = File.join( runtime[:home],".xmonad" )
+xmonad_dir = File.join( runtime["home"],".xmonad" )
 xmobarhs_path = File.join( xmonad_dir, "xmobar.hs" )
 xmobar_path = File.join( xmonad_dir, "xmobar" )
 
 template xmobar_path do
   source "xmobar.hs.erb"
   mode 0755
-  owner runtime[:uid]
-  group runtime[:gid]
+  owner runtime["uid"]
+  group runtime["gid"]
   variables( {
-    :color => node[:color]
+    "color" => node["color"]
   } )
 end
 
 template File.join( xmonad_dir,"xmonad.hs" ) do
   source "xmonad.hs.erb"
   mode 0755
-  owner runtime[:uid]
-  group runtime[:gid]
+  owner runtime["uid"]
+  group runtime["gid"]
   variables( {
-    :color => node[:color]
+    "color" => node["color"]
   } )
 end
 

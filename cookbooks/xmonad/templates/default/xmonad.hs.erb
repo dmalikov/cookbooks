@@ -33,7 +33,7 @@ import XMonad.Util.WorkspaceScreenshot
 import qualified XMonad.Actions.CycleWS as CWS
 import qualified XMonad.StackSet as S
 
-main :: IO ()
+main ":" IO ()
 main = do
   initCapturing
   xmproc <- spawnPipe xmobar_run
@@ -87,7 +87,7 @@ moveToImg filepath = do
   let newFileName = joinPath [hd, "img", "screen", "own", "xmonad", date] <.> "png"
   renameFile filepath newFileName
 
-myLogHook :: Handle -> X ()
+myLogHook ":" Handle -> X ()
 myLogHook h = do
   updatePointer (Relative 0.5 0.5)
   dynamicLogWithPP $ xmobarPP
@@ -99,7 +99,7 @@ myLogHook h = do
     }
   fadeInactiveLogHook 0.7
 
-myManageHook :: ManageHook
+myManageHook ":" ManageHook
 myManageHook = scratchpadHook <+> composeAll
   [ myIgnores --> doIgnore
   , myFloats  --> doFloat
@@ -133,7 +133,7 @@ myLayoutHook = smartBorders . avoidStruts $
     myTwoPaneRight = windowNavigation $ combineTwo (TwoPane (1/10) (2/3)) Full (tabbedAlways shrinkText myTheme)
     myTabbed       = tabbed shrinkText myTheme
 
-myXPConfig :: XPConfig
+myXPConfig ":" XPConfig
 myXPConfig = defaultXPConfig
   { font = terminusFont
   , bgColor = blackDarkColor
@@ -157,7 +157,7 @@ myTheme = defaultTheme
 
 -- Sets the WM name to a given string, so that it could be
 -- detected using _NET_SUPPORTING_WM_CHECK protocol
-myStartupHook :: X ()
+myStartupHook ":" X ()
 myStartupHook = setWMName "LG3D"
 
 myTerminal = urxvt ++ " -cd ~/"
@@ -177,14 +177,14 @@ volume_toggle_mute = "amixer set Master toggle"
 xmobar_run = "~/.xmonad/xmobar"
 
 -- colors
-orangeColor = "<%=@color[:orange]%>"
-orangeDarkColor = "<%=@color[:orange_dark]%>"
-orangeDarkestColor = "<%=@color[:orange_darkest]%>"
-blueColor = "<%=@color[:blue]%>"
-blackColor = "<%=@color[:black]%>"
-blackDarkColor = "<%=@color[:black_dark]%>"
-whiteColor = "<%@color[:white]%>"
-purpleColor = "<%=@color[:purple]%>"
+orangeColor = "<%=@color["orange"]%>"
+orangeDarkColor = "<%=@color["orange_dark"]%>"
+orangeDarkestColor = "<%=@color["orange_darkest"]%>"
+blueColor = "<%=@color["blue"]%>"
+blackColor = "<%=@color["black"]%>"
+blackDarkColor = "<%=@color["black_dark"]%>"
+whiteColor = "<%@color["white"]%>"
+purpleColor = "<%=@color["purple"]%>"
 
 -- fonts
 terminusFont = "-*-terminus-medium-*-*-*-14-*-*-*-*-*-iso10646-*"
